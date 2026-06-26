@@ -378,6 +378,24 @@
     border-radius: 999px;
     color: var(--text-muted);
   }
+  .upi-btn-row {
+    display: flex; justify-content: center; gap: .7rem;
+    margin-top: 1rem; flex-wrap: wrap;
+  }
+  .upi-app-btn {
+    display: flex; flex-direction: column; align-items: center; gap: .3rem;
+    padding: .6rem 1rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .15s;
+    min-width: 72px;
+  }
+  .upi-app-btn:hover { border-color: var(--gold); box-shadow: var(--shadow); transform: translateY(-1px); }
+  .upi-app-btn img { width: 36px; height: 36px; object-fit: contain; }
+  .upi-app-btn span { font-size: .68rem; color: var(--text-muted); font-weight: 500; }
   .amount-badge {
     font-size: 1.6rem; font-weight: 700;
     color: var(--maroon);
@@ -793,6 +811,11 @@
       <span class="upi-pill">GPay</span>
       <span class="upi-pill">BHIM UPI</span>
     </div>
+
+    <p style="font-size:.78rem; color:var(--text-muted); margin-top:.9rem; margin-bottom:.3rem;">या नीचे क्लिक करके सीधे ऐप से भुगतान करें · Or tap to pay directly:</p>
+    <div class="upi-btn-row" id="upiBtnRow">
+      <!-- buttons injected by JS with live amount -->
+    </div>
   </div>
   <p style="text-align:center; font-size:.84rem; color:var(--text-muted); margin-bottom:1.5rem; padding: 0 1rem;">
     Pay at the temple counter, or scan the QR above. After payment, click <strong>Confirm Donation</strong>.
@@ -963,7 +986,7 @@ function goStep(n) {
     if (i<n) document.getElementById('sn'+i).textContent = '✓';
     else document.getElementById('sn'+i).textContent = i;
   });
-  if (n===3) buildOrderSummary();
+  if (n===3) { buildOrderSummary(); }
   if (n===4) buildThankCard();
   window.scrollTo(0,0);
 }
@@ -978,6 +1001,27 @@ function validateForm() {
   goStep(3);
 }
 
+function buildUpiButtons(total) {
+  const upiId = 'SHRIADJTCSKJNSUOSDJPC@hdfcbank';
+  const name  = 'Vidyoday+Teerth+Donation';
+  const note  = encodeURIComponent('Vidyoday Teerth Donation');
+  const upiUrl = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR&tn=${note}`;
+  const apps = [
+    { label:'PhonePe',  icon:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/PhonePe_Logo.png/200px-PhonePe_Logo.png',  url: `phonepe://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR` },
+    { label:'GPay',     icon:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/200px-Google_Pay_Logo.svg.png', url: `tez://upi/pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR` },
+    { label:'PayTm',    icon:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/200px-Paytm_Logo_%28standalone%29.svg.png', url: `paytmmp://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR` },
+    { label:'BHIM',     icon:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/BHIM_SVG_Logo.svg/200px-BHIM_SVG_Logo.svg.png', url: `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR` },
+    { label:'Any UPI',  icon:'', url: upiUrl },
+  ];
+  const row = document.getElementById('upiBtnRow');
+  if (!row) return;
+  row.innerHTML = apps.map(a => `
+    <a class="upi-app-btn" href="${a.url}" target="_blank" rel="noopener">
+      ${a.icon ? `<img src="${a.icon}" alt="${a.label}" onerror="this.style.display='none'">` : '<span style="font-size:1.6rem">📱</span>'}
+      <span>${a.label}</span>
+    </a>`).join('');
+}
+
 function buildOrderSummary() {
   const ids = Object.keys(cart);
   const total = ids.reduce((sum, id) => {
@@ -985,6 +1029,7 @@ function buildOrderSummary() {
     return sum + (art ? art.amt * cart[id] : 0);
   }, 0);
   document.getElementById('payAmt').textContent = '₹' + total.toLocaleString('en-IN');
+  buildUpiButtons(total);
   let rows = ids.map(id => {
     const art = ARTIFACTS.find(a => a.id === id);
     if (!art) return '';
