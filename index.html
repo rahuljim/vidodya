@@ -4,8 +4,1088 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>विद्योदय तीर्थ – दान योजना | Vidyoday Teerth Donation</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  // ── Google Form config ────────────────────────────────────────────────────
+  // STEP 1: Create a Google Form at forms.google.com with these fields (in order):
+  //   1. Full Name        2. Mobile  3. Email  4. Address
+  //   5. Items Donated    6. Total Amount  7. Message
+  // STEP 2: Open the form → ⋮ → Get pre-filled link → fill dummy data → Get link
+  //         Copy the form URL and each "entry.XXXXXXX" field ID below.
+  const GOOGLE_FORM_ID    = 'YOUR_FORM_ID';   // e.g. 1FAIpQLSe...
+  const GFORM_NAME        = 'entry.000000001';
+  const GFORM_PHONE       = 'entry.000000002';
+  const GFORM_EMAIL       = 'entry.000000003';
+  const GFORM_ADDRESS     = 'entry.000000004';
+  const GFORM_ITEMS       = 'entry.000000005';
+  const GFORM_TOTAL       = 'entry.000000006';
+  const GFORM_MESSAGE     = 'entry.000000007';
+  const ADMIN_EMAIL       = 'teerthvidodya@gmail.com';
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C8941A;
+    --gold-light: #F5E6C0;
+    --gold-dark: #8B6310;
+    --maroon: #7B1C1C;
+    --maroon-light: #F9EDED;
+    --cream: #FBF6EE;
+    --cream-dark: #F0E8D8;
+    --text: #2A1A0E;
+    --text-muted: #6B4F2F;
+    --white: #FFFFFF;
+    --border: rgba(200, 148, 26, 0.25);
+    --shadow: 0 2px 16px rgba(123,28,28,0.08);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(160deg, var(--maroon) 0%, #4A0E0E 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 3rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(200,148,26,0.18)'/%3E%3C/svg%3E") repeat;
+  }
+  .hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
+  .om { font-size: 2.2rem; color: var(--gold); margin-bottom: .5rem; }
+  .hero h1 {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    margin-bottom: .5rem;
+  }
+  .hero-sub {
+    font-size: .95rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: .4rem;
+  }
+  .hero-eng {
+    font-size: 1rem; font-weight: 500;
+    color: var(--gold-light);
+    opacity: .9;
+    margin-bottom: 1.4rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(200,148,26,0.2);
+    border: 1px solid rgba(200,148,26,0.45);
+    color: var(--gold-light);
+    font-size: .8rem;
+    padding: .35rem 1rem;
+    border-radius: 999px;
+    letter-spacing: .04em;
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* ── Section title ── */
+  .sec-title {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: 1.5rem; font-weight: 400;
+    color: var(--maroon);
+    text-align: center;
+    margin-bottom: .35rem;
+  }
+  .sec-title-en {
+    text-align: center;
+    font-size: .82rem;
+    color: var(--text-muted);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--maroon));
+    margin: .5rem auto 1.6rem;
+    border-radius: 2px;
+  }
+
+  /* ── Steps bar ── */
+  .steps {
+    display: flex;
+    gap: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .step-btn {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center; gap: .4rem;
+    padding: .9rem .5rem;
+    border: none; background: transparent; cursor: default;
+    font-size: .82rem; color: var(--text-muted);
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+  }
+  .step-btn.active {
+    color: var(--maroon); font-weight: 600;
+    border-bottom-color: var(--gold);
+    background: var(--maroon-light);
+  }
+  .step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    color: var(--text-muted);
+    font-size: .75rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-btn.active .step-num {
+    background: var(--gold);
+    color: var(--white);
+  }
+  .step-btn.done .step-num {
+    background: #3A7D44;
+    color: var(--white);
+  }
+  .step-btn.done { color: #3A7D44; }
+
+  /* ── Page sections ── */
+  .page { display: none; padding: 2rem 0 3rem; }
+  .page.active { display: block; }
+
+  /* ── Category tabs ── */
+  .cat-tabs {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    margin-bottom: 1.5rem;
+  }
+  .cat-tab {
+    padding: .45rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--white);
+    font-size: .82rem; cursor: pointer;
+    color: var(--text-muted);
+    transition: all .15s;
+  }
+  .cat-tab:hover { border-color: var(--gold); color: var(--gold-dark); }
+  .cat-tab.active {
+    background: var(--maroon); color: var(--white);
+    border-color: var(--maroon);
+  }
+
+  /* ── Artifact grid ── */
+  .art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .art-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all .18s;
+    position: relative;
+  }
+  .art-card:hover { border-color: var(--gold); box-shadow: var(--shadow); }
+  .art-card.selected {
+    border: 2px solid var(--gold);
+    background: #FFFBF1;
+  }
+  .art-card.selected::after {
+    content: '✓';
+    position: absolute; top: .5rem; right: .6rem;
+    width: 22px; height: 22px;
+    background: var(--gold);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: .75rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 22px; text-align: center;
+  }
+  .art-name-hi {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: 1rem; color: var(--maroon);
+    margin-bottom: .15rem;
+  }
+  .art-name-en {
+    font-size: .75rem; color: var(--text-muted);
+    margin-bottom: .5rem;
+  }
+  .art-amount {
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold-dark);
+  }
+  .art-qty {
+    font-size: .73rem; color: var(--text-muted);
+    margin-top: .1rem;
+  }
+
+  /* ── Qty controls ── */
+  .qty-row {
+    display: flex; align-items: center; gap: .5rem;
+    margin-top: .7rem;
+  }
+  .qty-btn {
+    width: 26px; height: 26px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--cream);
+    font-size: 1rem; font-weight: 600;
+    cursor: pointer; color: var(--maroon);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .1s;
+  }
+  .qty-btn:hover { background: var(--gold-light); }
+  .qty-val {
+    font-size: .9rem; font-weight: 600;
+    min-width: 20px; text-align: center;
+  }
+
+  /* ── Summary bar ── */
+  .summary-bar {
+    position: sticky; bottom: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: .9rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    box-shadow: 0 -4px 20px rgba(0,0,0,.06);
+  }
+  .summary-info { font-size: .88rem; color: var(--text-muted); }
+  .summary-total { font-size: 1.2rem; font-weight: 700; color: var(--maroon); }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .7rem 1.6rem;
+    border-radius: 8px;
+    border: none; cursor: pointer;
+    font-size: .9rem; font-weight: 600;
+    transition: all .15s;
+  }
+  .btn-primary {
+    background: var(--maroon); color: var(--white);
+  }
+  .btn-primary:hover { background: #5A1010; }
+  .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--maroon);
+    color: var(--maroon);
+  }
+  .btn-outline:hover { background: var(--maroon-light); }
+
+  /* ── Form ── */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: .35rem; }
+  .form-group label { font-size: .82rem; font-weight: 500; color: var(--text-muted); }
+  .form-group input, .form-group textarea, .form-group select {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: .6rem .8rem;
+    font-size: .9rem;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    transition: border .15s;
+    font-family: inherit;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group.full { grid-column: 1 / -1; }
+
+  /* ── Order summary card ── */
+  .order-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .order-card-head {
+    background: var(--maroon-light);
+    padding: .75rem 1rem;
+    font-weight: 600; font-size: .88rem;
+    color: var(--maroon);
+    border-bottom: 1px solid var(--border);
+  }
+  .order-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: .65rem 1rem;
+    border-bottom: 1px solid rgba(200,148,26,.1);
+    font-size: .88rem;
+  }
+  .order-item:last-child { border-bottom: none; }
+  .order-item-name { color: var(--text); }
+  .order-item-amt { font-weight: 600; color: var(--gold-dark); }
+  .order-total {
+    display: flex; justify-content: space-between;
+    padding: .8rem 1rem;
+    background: var(--cream-dark);
+    font-weight: 700; font-size: 1rem;
+    color: var(--maroon);
+  }
+
+  /* ── QR section ── */
+  .qr-box {
+    background: var(--white);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    max-width: 360px;
+    margin: 0 auto 1.5rem;
+  }
+  .qr-img {
+    width: 200px; height: 200px;
+    object-fit: contain;
+    margin: 0 auto 1rem;
+    display: block;
+    border: 6px solid var(--cream-dark);
+    border-radius: 8px;
+  }
+  .qr-upi {
+    font-size: .78rem;
+    color: var(--text-muted);
+    margin-top: .5rem;
+  }
+  .qr-upi strong { color: var(--maroon); }
+  .upi-apps {
+    display: flex; justify-content: center; gap: .6rem;
+    margin-top: .8rem; flex-wrap: wrap;
+  }
+  .upi-pill {
+    font-size: .72rem;
+    padding: .25rem .7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+  }
+  .amount-badge {
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--maroon);
+    margin: .5rem 0 .2rem;
+  }
+
+  /* ── Success ── */
+  .success-icon {
+    width: 72px; height: 72px;
+    background: #EAF6EB;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+  }
+  .success-title {
+    font-family: 'Tiro Devanagari Hindi', serif;
+    font-size: 1.8rem; color: var(--maroon);
+    text-align: center; margin-bottom: .4rem;
+  }
+  .success-note {
+    text-align: center; font-size: .9rem;
+    color: var(--text-muted); max-width: 420px;
+    margin: 0 auto 2rem; line-height: 1.7;
+  }
+
+  /* ── Misc ── */
+  .info-block {
+    background: var(--maroon-light);
+    border-left: 4px solid var(--maroon);
+    border-radius: 0 8px 8px 0;
+    padding: .85rem 1rem;
+    font-size: .84rem; line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .info-block strong { color: var(--maroon); }
+
+  .section-wrap { margin-bottom: 2.5rem; }
+
+  @media (max-width: 600px) {
+    .steps { font-size: .72rem; }
+    .step-btn { padding: .7rem .3rem; gap: .25rem; }
+    .art-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Print / thank you card */
+  @media print {
+    .steps, .summary-bar, .btn, .hero { display: none !important; }
+  }
+
+  /* ── Landing page extras ── */
+  .stat-pill {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .75rem 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: .2rem;
+    text-align: center;
+  }
+  .stat-num { font-size: 1.4rem; font-weight: 700; color: var(--maroon); line-height: 1; }
+  .stat-lbl { font-size: .72rem; color: var(--text-muted); line-height: 1.3; }
+
+  .guru-badge {
+    font-size: .72rem;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    background: var(--maroon-light);
+    color: var(--maroon);
+    border: 1px solid rgba(123,28,28,.2);
+    font-weight: 500;
+  }
+  .guru-badge-blue {
+    background: #EEF3FA;
+    color: #1C3D7B;
+    border-color: rgba(28,61,123,.2);
+  }
+
+  .prog-item {
+    padding: .5rem .8rem;
+    border-radius: 8px;
+    font-size: .78rem;
+    background: rgba(200,148,26,.1);
+    color: var(--text-muted);
+    border: 1px solid rgba(200,148,26,.2);
+    text-align: center;
+  }
+  .prog-done { background: rgba(58,125,68,.1); color: #2A6B35; border-color: rgba(58,125,68,.25); }
+  .prog-active { background: var(--maroon-light); color: var(--maroon); border-color: rgba(123,28,28,.25); font-weight: 600; }
+
+  @media (max-width: 580px) {
+    #landingPage [style*="grid-template-columns: 2fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    #landingPage [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    .stat-num { font-size: 1.1rem; }
+  }
+</style>
 </head>
 <body>
-<h1>Test</h1>
+
+<!-- ══ LANDING PAGE ══ -->
+<div id="landingPage">
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="om">🕉</div>
+    <h1>विद्योदय तीर्थ</h1>
+    <p class="hero-sub">श्री आदिनाथ दिगम्बर जैन पंचबालयति, त्रिकाल चौबीसी एवं सहस्रकूट जिनालय</p>
+    <p class="hero-eng">Panchbalyati · Trikal Chaubisi · Sahastrakut Jinaalay</p>
+    <p class="hero-sub" style="margin-bottom:.8rem">एम.पी. नगर, हबीबगंज, भोपाल | M.P. Nagar, Habibganj, Bhopal</p>
+    <span class="hero-badge">निर्माण दान योजना · Construction Donation Drive · 2 April 2026</span>
+  </div>
+</div>
+
+<!-- ── Temple Visual Section ── -->
+<div style="background:var(--cream-dark); border-bottom:1px solid var(--border);">
+  <div class="container" style="padding-top:2.5rem; padding-bottom:2.5rem;">
+
+    <p class="sec-title">निर्माणाधीन मंदिर परिसर</p>
+    <p class="sec-title-en">Temple under construction · M.P. Nagar, Habibganj, Bhopal</p>
+    <div class="divider"></div>
+
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:.75rem; margin-bottom:1.5rem;">
+      <div style="grid-row:1/3; min-height:280px; border-radius:12px; overflow:hidden; position:relative; background:#6B3A1A;">
+        <img src="img1.jpg"
+          onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Dilwara_Temples_at_Mount_Abu.jpg/800px-Dilwara_Temples_at_Mount_Abu.jpg';"
+          alt="Jain Temple Architecture"
+          style="width:100%; height:100%; object-fit:cover; object-position:center;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(74,14,14,.8) 0%, transparent 45%);"></div>
+        <div style="position:absolute; bottom:1rem; left:1rem; right:1rem;">
+          <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.3rem; color:var(--gold-light); text-shadow:0 2px 8px rgba(0,0,0,.8);">विद्योदय तीर्थ</p>
+          <p style="font-size:.72rem; color:rgba(245,230,192,.8); text-shadow:0 1px 4px rgba(0,0,0,.7);">एम.पी. नगर, हबीबगंज, भोपाल · राजस्थानी बलुआ पत्थर निर्माण</p>
+        </div>
+        <div style="position:absolute; top:.7rem; left:.8rem; background:rgba(200,148,26,.9); color:#2A1A0E; font-size:.7rem; font-weight:700; padding:.2rem .6rem; border-radius:99px;">🏗️ निर्माणाधीन</div>
+      </div>
+
+      <div style="border-radius:10px; overflow:hidden; min-height:130px; background:#E8D5B0; position:relative;">
+        <img src="img2.jpg" alt="Digambar Jain Mandir Bhopal"
+          style="width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.5); padding:.3rem .5rem; font-size:.65rem; color:#FBF6EE; text-align:center;">दिगम्बर जैन मंदिर, भोपाल</div>
+      </div>
+
+      <div style="border-radius:10px; overflow:hidden; min-height:130px; background:#D4C4A0; position:relative;">
+        <img src="img3.jpg" alt="MP Nagar Habibganj Bhopal"
+          style="width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.5); padding:.3rem .5rem; font-size:.65rem; color:#FBF6EE; text-align:center;">एम.पी. नगर, हबीबगंज, भोपाल</div>
+      </div>
+
+      <div style="border-radius:10px; overflow:hidden; min-height:130px; background:#BEA882; position:relative;">
+        <img src="img4.jpg" alt="Jain Temple carved interior"
+          style="width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.5); padding:.3rem .5rem; font-size:.65rem; color:#FBF6EE; text-align:center;">राजस्थानी नक्काशी — संदर्भ शैली</div>
+      </div>
+
+      <div style="border-radius:10px; overflow:hidden; min-height:130px; background:#A89060; position:relative;">
+        <img src="img5.jpg" alt="Jain idol 1008"
+          style="width:100%; height:100%; object-fit:cover; object-position:top;">
+        <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.5); padding:.3rem .5rem; font-size:.65rem; color:#FBF6EE; text-align:center;">1008 जिन प्रतिमाएं — सहस्रकूट</div>
+      </div>
+    </div>
+
+    <!-- Stats strip -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:.75rem; margin-bottom:2rem;">
+      <div class="stat-pill"><span class="stat-num">153 ft</span><span class="stat-lbl">मंदिर ऊंचाई<br>Temple Height</span></div>
+      <div class="stat-pill"><span class="stat-num">95,000</span><span class="stat-lbl">sq ft परिसर<br>Complex Area</span></div>
+      <div class="stat-pill"><span class="stat-num">1008</span><span class="stat-lbl">भगवान प्रतिमाएं<br>Idols of Bhagwan</span></div>
+      <div class="stat-pill"><span class="stat-num">135 ft</span><span class="stat-lbl">सहस्रकूट ऊंचाई<br>Sahastrakut Ht.</span></div>
+      <div class="stat-pill"><span class="stat-num">4</span><span class="stat-lbl">तल / Floors</span></div>
+    </div>
+
+    <!-- About text -->
+    <div style="background:var(--white); border-radius:12px; border:1px solid var(--border); padding:1.4rem 1.5rem; margin-bottom:2rem; line-height:1.85; color:var(--text-muted); font-size:.9rem;">
+      <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.15rem; color:var(--maroon); margin-bottom:.6rem;">विद्योदय तीर्थ के बारे में</p>
+      <p style="margin-bottom:.8rem;">वर्तमान युग के अधिपराम परम्पूज्य संत शिरोमणि <strong>आचार्य 108 श्री विद्यासागर जी महामुनिराज</strong> की प्रेरणा एवं नवाचार्य 108 श्री समयसागरजी महाराज के आशीर्वाद से श्री आदिनाथ दिगम्बर जैन पंचबालयति, त्रिकाल चौबीसी एवं सहस्रकूट जिनालय <strong>विद्योदय तीर्थ</strong> का निर्माण कार्य एम.पी. नगर, भोपाल में प्रगति पर है।</p>
+      <p style="margin-bottom:.8rem;">मंदिर जी का परिसर लगभग <strong>2 एकड़</strong> भूमि क्षेत्र 95,000 वर्गफिट में है जिसमें 35,000 वर्गफिट में मंदिर निर्माणाधीन है। <strong>विद्योदय तीर्थ</strong> पंच मंजिला वाले जैन के निर्माण के लिए अधारशिला <strong>153 फिट</strong> ऊंचा होगा।</p>
+      <p>भूतल पर <strong>1008 भगवान श्री आदिनाथ भगवान विराजमान</strong> होंगे। पंचम तल पर एक मुख्य गर्भगृह एवं चौबीसी विराजमान होगी। इसके अतिरिक्त अति सुन्दर 135 फिट ऊंचाई का <strong>सहस्रकूट जिनालय</strong> भी होगा जिसमें 1008 पद्मासन एवं खड्गासन प्रतिमाएं विराजमान होंगी।</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Guru Section ── -->
+<div style="background:var(--white); border-bottom:1px solid var(--border);">
+  <div class="container" style="padding-top:2.5rem; padding-bottom:2.5rem;">
+    <p class="sec-title">दिव्य प्रेरणा स्रोत</p>
+    <p class="sec-title-en">The saints whose blessings guide Vidyoday Teerth</p>
+    <div class="divider"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+
+      <div style="background:var(--cream); border:2px solid var(--gold); border-radius:14px; overflow:hidden;">
+        <div style="height:260px; overflow:hidden; background:linear-gradient(160deg,#3A0A0A 0%,#7B1C1C 60%,#C8941A 100%); display:flex; align-items:center; justify-content:center; position:relative;">
+          <img src="img6.jpg"
+            onerror="this.onerror=null; this.style.display='none';"
+            alt="परम पूज्य आचार्य श्री 108 विद्यासागर जी महामुनिराज"
+            style="width:100%; height:100%; object-fit:cover; object-position:top center;">
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(58,10,10,.9) 0%, rgba(58,10,10,.1) 50%, transparent 100%);"></div>
+          <div style="position:absolute; bottom:.9rem; left:1rem; right:1rem;">
+            <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:.95rem; color:rgba(245,230,192,.85); text-shadow:0 1px 4px rgba(0,0,0,.9); margin-bottom:.15rem;">परम पूज्य आचार्य श्री 108</p>
+            <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.35rem; color:var(--gold-light); font-weight:400; text-shadow:0 2px 8px rgba(0,0,0,.9); line-height:1.2;">विद्यासागर जी महामुनिराज</p>
+            <p style="font-size:.72rem; color:rgba(245,230,192,.7); margin-top:.25rem; text-shadow:0 1px 3px rgba(0,0,0,.8);">10 अक्तूबर 1946 – 18 फरवरी 2024</p>
+          </div>
+        </div>
+        <div style="padding:1rem 1.2rem;">
+          <div style="display:flex; gap:.5rem; margin-bottom:.7rem; flex-wrap:wrap;">
+            <span class="guru-badge" style="background:#FFF8EC; color:#7B4700; border-color:rgba(200,148,26,.4);">✦ महान प्रेरणा स्रोत</span>
+            <span class="guru-badge">दिगम्बर जैन संत शिरोमणि</span>
+          </div>
+          <p style="font-size:.84rem; color:var(--text-muted); line-height:1.8;">संत शिरोमणि <strong style="color:var(--maroon)">परम पूज्य आचार्य श्री 108 विद्यासागर जी महामुनिराज</strong> का जन्म 10 अक्तूबर 1946 को हुआ था। <strong style="color:var(--maroon)">विद्योदय तीर्थ</strong> का निर्माण उनकी पावन प्रेरणा का साकार स्वरूप है। 18 फरवरी 2024 को उन्होंने सल्लेखना द्वारा शरीर त्याग किया।</p>
+        </div>
+      </div>
+
+      <div style="background:var(--cream); border:2px solid rgba(28,61,123,.35); border-radius:14px; overflow:hidden;">
+        <div style="height:260px; overflow:hidden; background:linear-gradient(160deg,#0A1A3A 0%,#1C3D7B 60%,#3A6DB5 100%); display:flex; align-items:center; justify-content:center; position:relative;">
+          <img src="img7.jpg"
+            onerror="this.onerror=null; this.style.display='none';"
+            alt="आचार्य श्री 108 समयसागर जी महामुनिराज"
+            style="width:100%; height:100%; object-fit:cover; object-position:top center;">
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,26,58,.9) 0%, rgba(10,26,58,.1) 50%, transparent 100%);"></div>
+          <div style="position:absolute; bottom:.9rem; left:1rem; right:1rem;">
+            <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:.95rem; color:rgba(185,210,245,.85); text-shadow:0 1px 4px rgba(0,0,0,.9); margin-bottom:.15rem;">वर्तमान पट्टाचार्य · आचार्य श्री 108</p>
+            <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.35rem; color:#C8DEFF; font-weight:400; text-shadow:0 2px 8px rgba(0,0,0,.9); line-height:1.2;">समयसागर जी महामुनिराज</p>
+            <p style="font-size:.72rem; color:rgba(185,210,245,.7); margin-top:.25rem; text-shadow:0 1px 3px rgba(0,0,0,.8);">जन्म: 27 अक्तूबर 1958 · आचार्य पद: 16 अप्रैल 2024</p>
+          </div>
+        </div>
+        <div style="padding:1rem 1.2rem;">
+          <div style="display:flex; gap:.5rem; margin-bottom:.7rem; flex-wrap:wrap;">
+            <span class="guru-badge guru-badge-blue">✦ वर्तमान पट्टाचार्य</span>
+            <span class="guru-badge guru-badge-blue">आशीर्वाद दाता</span>
+          </div>
+          <p style="font-size:.84rem; color:var(--text-muted); line-height:1.8;"><strong style="color:#1C3D7B">आचार्य श्री 108 समयसागर जी महामुनिराज</strong> का जन्म 27 अक्तूबर 1958 को हुआ। 16 अप्रैल 2024 को उन्हें आचार्य पद से विभूषित किया गया। <strong style="color:var(--maroon)">विद्योदय तीर्थ</strong> का उद्घाटन 2 अप्रैल 2026 को उनके श्रीमुख से हुआ।</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Construction Progress ── -->
+<div style="background:var(--cream-dark); border-bottom:3px solid var(--gold);">
+  <div class="container" style="padding-top:2rem; padding-bottom:2rem;">
+    <div style="display:grid; grid-template-columns:1fr auto; align-items:center; gap:1rem; margin-bottom:1rem;">
+      <div>
+        <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.2rem; color:var(--maroon);">निर्माण की प्रगति</p>
+        <p style="font-size:.8rem; color:var(--text-muted); letter-spacing:.05em; text-transform:uppercase;">Construction progress · April 2026</p>
+      </div>
+      <span style="font-size:1.8rem; font-weight:700; color:var(--gold-dark);">~40%</span>
+    </div>
+    <div style="background:#E8D5B0; border-radius:99px; height:14px; overflow:hidden;">
+      <div style="width:40%; height:100%; background:linear-gradient(90deg,var(--maroon),var(--gold)); border-radius:99px;"></div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:.6rem; margin-top:1.2rem;">
+      <div class="prog-item prog-done">✓ भूतल निर्माण शुरू</div>
+      <div class="prog-item prog-done">✓ पिलर एवं नींव</div>
+      <div class="prog-item prog-active">→ शिखर एवं गर्भगृह</div>
+      <div class="prog-item">○ त्रिकाल चौबीसी</div>
+      <div class="prog-item">○ सहस्रकूट जिनालय</div>
+    </div>
+
+    <div style="text-align:center; margin-top:1.8rem;">
+      <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.1rem; color:var(--maroon); margin-bottom:.5rem;">मुक्त हस्त से दान देकर आचार्यश्री का सपना साकार करें</p>
+      <p style="font-size:.84rem; color:var(--text-muted); margin-bottom:1rem;">Donate generously to make Guruvar's dream come true</p>
+      <button class="btn btn-primary" onclick="startDonation()" style="font-size:1rem; padding:.85rem 2.5rem; background:var(--maroon);">
+        🙏 दान करें · Donate Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Contact strip ── -->
+<div style="background:var(--maroon); color:var(--white); padding:1.2rem 0;">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; gap:1.2rem; justify-content:space-between; align-items:center; font-size:.82rem;">
+      <div>
+        <strong style="color:var(--gold-light);">पंकज जैन 'सुपारी'</strong> — अध्यक्ष, श्री दिग. जैन पंचायत कमेटी ट्रस्ट<br>
+        <span style="color:rgba(255,255,255,.7);">📞 9755442300</span>
+      </div>
+      <div>
+        <strong style="color:var(--gold-light);">राकेश जैन 'ओरएसडी'</strong> — निर्माण समिति<br>
+        <span style="color:rgba(255,255,255,.7);">📞 8878823456</span>
+      </div>
+      <div>
+        <strong style="color:var(--gold-light);">जितेन्द्र जैन</strong> — लेख सदस्य, निर्माण समिति<br>
+        <span style="color:rgba(255,255,255,.7);">📞 9165988999</span>
+      </div>
+      <div>
+        <strong style="color:var(--gold-light);">Helpline</strong><br>
+        <span style="color:rgba(255,255,255,.7);">📞 72240 81457</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end landingPage -->
+
+<!-- ══════════ DONATION SECTION ══════════ -->
+<div id="donationSection" style="display:none;">
+
+<div class="steps" id="stepBar">
+  <button class="step-btn active" id="s1btn" onclick="goStep(1)">
+    <span class="step-num" id="sn1">1</span>
+    <span>Choose Artifacts</span>
+  </button>
+  <button class="step-btn" id="s2btn" onclick="goStep(2)">
+    <span class="step-num" id="sn2">2</span>
+    <span>Your Details</span>
+  </button>
+  <button class="step-btn" id="s3btn" onclick="goStep(3)">
+    <span class="step-num" id="sn3">3</span>
+    <span>Pay via UPI</span>
+  </button>
+  <button class="step-btn" id="s4btn">
+    <span class="step-num" id="sn4">4</span>
+    <span>Confirm</span>
+  </button>
+</div>
+
+<!-- STEP 1 -->
+<div class="page active" id="page1">
+<div class="container">
+  <div style="padding-top:1.5rem;">
+    <p class="sec-title">निर्माण योजना में सहभागी बनें</p>
+    <p class="sec-title-en">Select artifacts to sponsor</p>
+    <div class="divider"></div>
+  </div>
+  <div class="info-block">
+    <strong>परम पूज्य आचार्य श्री 108 विद्यासागर जी महामुनिराज</strong> की प्रेरणा एवं जनवाचार्य 108 श्री समयसागरजी महाराज के आशीर्वाद से निर्माणाधीन मंदिर। कृपया एक या अधिक निर्माण योजनाएं चुनें और मुक्त हस्त से दान दें।
+  </div>
+  <div class="cat-tabs" id="catTabs"></div>
+  <div class="art-grid" id="artGrid"></div>
+  <div style="margin-top:1.5rem; padding:1.2rem; background:var(--white); border:1px dashed var(--border); border-radius:12px;">
+    <p style="font-size:.88rem; color:var(--text-muted); margin-bottom:.6rem;"><strong>अन्य राशि / Custom donation amount (₹)</strong></p>
+    <div style="display:flex; gap:.8rem; flex-wrap:wrap; align-items:center;">
+      <input type="number" id="customAmt" placeholder="e.g. 5000" min="1"
+        style="border:1.5px solid var(--border); border-radius:8px; padding:.55rem .8rem; font-size:.95rem; width:180px;">
+      <input type="text" id="customNote" placeholder="Note (optional)"
+        style="border:1.5px solid var(--border); border-radius:8px; padding:.55rem .8rem; font-size:.9rem; flex:1; min-width:140px;">
+      <button class="btn btn-outline" onclick="addCustom()" style="padding:.55rem 1.2rem;">+ Add</button>
+    </div>
+  </div>
+</div>
+<div class="summary-bar">
+  <div>
+    <div class="summary-info" id="selCount">0 item(s) selected</div>
+    <div class="summary-total" id="selTotal">₹0</div>
+  </div>
+  <button class="btn btn-primary" id="nextBtn1" disabled onclick="goStep(2)">Continue →</button>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="page" id="page2">
+<div class="container">
+  <div style="padding-top:1.5rem; margin-bottom:1.5rem;">
+    <p class="sec-title">दानदाता की जानकारी</p>
+    <p class="sec-title-en">Your details</p>
+    <div class="divider"></div>
+  </div>
+  <div class="form-grid" id="donorForm">
+    <div class="form-group">
+      <label>पूरा नाम / Full Name *</label>
+      <input type="text" id="fName" placeholder="Your full name" required>
+    </div>
+    <div class="form-group">
+      <label>मोबाइल / Mobile *</label>
+      <input type="tel" id="fPhone" placeholder="10-digit mobile" maxlength="10" required>
+    </div>
+    <div class="form-group full">
+      <label>ईमेल / Email *</label>
+      <input type="email" id="fEmail" placeholder="your@email.com" required>
+    </div>
+    <div class="form-group full">
+      <label>पता / Address</label>
+      <input type="text" id="fAddr" placeholder="City, State">
+    </div>
+    <div class="form-group full">
+      <label>गोत्र / Gotra (optional)</label>
+      <input type="text" id="fGotra" placeholder="Your Gotra">
+    </div>
+    <div class="form-group full">
+      <label>संदेश / Message (optional)</label>
+      <textarea id="fMsg" rows="2" placeholder="Special message or dedication"></textarea>
+    </div>
+  </div>
+  <div style="display:flex; gap:1rem; justify-content:space-between; flex-wrap:wrap; margin-top:1.5rem; padding-bottom:3rem;">
+    <button class="btn btn-outline" onclick="goStep(1)">← Back</button>
+    <button class="btn btn-primary" onclick="validateForm()">Proceed to Pay →</button>
+  </div>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="page" id="page3">
+<div class="container">
+  <div style="padding-top:1.5rem; margin-bottom:1.5rem;">
+    <p class="sec-title">UPI / QR से भुगतान करें</p>
+    <p class="sec-title-en">Scan &amp; pay at the counter</p>
+    <div class="divider"></div>
+  </div>
+  <div class="order-card" id="orderSummaryCard"></div>
+  <div class="qr-box">
+    <p style="font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); margin-bottom:.8rem;">Scan to Pay</p>
+    <img class="qr-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%23f5e6c0'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-size='13' fill='%237B1C1C' font-family='sans-serif'%3EPayZapp QR%3C/text%3E%3Ctext x='50%25' y='60%25' dominant-baseline='middle' text-anchor='middle' font-size='11' fill='%23C8941A' font-family='sans-serif'%3E@SHRI ADJTCSKJNSU%3C/text%3E%3Ctext x='50%25' y='73%25' dominant-baseline='middle' text-anchor='middle' font-size='10' fill='%236B4F2F' font-family='sans-serif'%3EOSDJPC%3C/text%3E%3C/svg%3E" alt="PayZapp QR Code" id="qrImg">
+    <div class="amount-badge" id="payAmt">₹0</div>
+    <p style="font-size:.82rem; color:var(--text-muted);">Total amount to pay</p>
+    <div class="qr-upi">
+      <strong>UPI ID:</strong> SHRI ADJTCSKJNSU OSDJPC<br>
+      <strong>TID NO:</strong> 65006900
+    </div>
+    <div class="upi-apps">
+      <span class="upi-pill">PayTm</span>
+      <span class="upi-pill">PhonePe</span>
+      <span class="upi-pill">PayZapp</span>
+      <span class="upi-pill">GPay</span>
+      <span class="upi-pill">BHIM UPI</span>
+    </div>
+  </div>
+  <p style="text-align:center; font-size:.84rem; color:var(--text-muted); margin-bottom:1.5rem; padding: 0 1rem;">
+    Pay at the temple counter, or scan the QR above. After payment, click <strong>Confirm Donation</strong>.
+  </p>
+  <div style="display:flex; gap:1rem; justify-content:space-between; flex-wrap:wrap; margin-bottom:3rem;">
+    <button class="btn btn-outline" onclick="goStep(2)">← Back</button>
+    <button class="btn btn-primary" onclick="confirmDonation()">✓ Confirm Donation</button>
+  </div>
+</div>
+</div>
+
+<!-- STEP 4 -->
+<div class="page" id="page4">
+<div class="container">
+  <div style="padding-top:2.5rem; text-align:center;">
+    <div class="success-icon">🙏</div>
+    <p class="success-title">धन्यवाद! आपका दान स्वीकार हो</p>
+    <p class="success-note">
+      आपकी दान राशि <strong id="thankAmt"></strong> विद्योदय तीर्थ के निर्माण में सहयोग करेगी।<br>
+      एक पुष्टि ईमेल मंदिर प्रशासन को भेजा जा रहा है।<br><br>
+      <em>Your donation helps build a timeless shrine for generations to come. 🕉</em>
+    </p>
+    <div class="order-card" id="thankCard" style="max-width:480px; margin: 0 auto 1.5rem; text-align:left;"></div>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;">
+      <button class="btn btn-outline" onclick="window.print()">🖨 Print Receipt</button>
+      <button class="btn btn-primary" onclick="resetAll()">Make Another Donation</button>
+    </div>
+    <div style="max-width:480px; margin:0 auto; padding:1.2rem; background:var(--white); border:1px solid var(--border); border-radius:12px; text-align:left;">
+      <p style="font-weight:600; color:var(--maroon); font-size:.88rem; margin-bottom:.6rem;">Bank Transfer Details</p>
+      <table style="width:100%; font-size:.82rem; color:var(--text-muted); border-collapse:collapse;">
+        <tr><td style="padding:.25rem 0; color:var(--text);">Account Name</td><td style="text-align:right;">Shri ADJTCSKJNSU OSDJPC</td></tr>
+        <tr><td style="padding:.25rem 0; color:var(--text);">A/c No.</td><td style="text-align:right;">310111098106</td></tr>
+        <tr><td style="padding:.25rem 0; color:var(--text);">IFSC</td><td style="text-align:right;">HDFC0003917</td></tr>
+        <tr><td style="padding:.25rem 0; color:var(--text);">Contact</td><td style="text-align:right;">72240 81457</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+</div><!-- end donationSection -->
+
+<script>
+const ARTIFACTS = [
+  { id:'a1',  cat:'Main Structure', hi:'मुख्य शिखर',         en:'Main Shikhar',              amt:5510000, unit:'1 unit' },
+  { id:'a2',  cat:'Main Structure', hi:'सहस्रकूट मुख्य शिखर', en:'Sahastrakut Main Shikhar',  amt:3500000, unit:'2 units' },
+  { id:'a3',  cat:'Main Structure', hi:'ध्यान केन्द्र मुख्य जैन', en:'Dhyan Kendra Main Jain', amt:5000000, unit:'1 unit' },
+  { id:'a4',  cat:'Main Structure', hi:'मुख्य मण्डपम जैन (संतुलय)', en:'Main Mandapam (Santulaya)', amt:3000000, unit:'1 unit' },
+  { id:'b1',  cat:'Garbhagriha',    hi:'मुख्य गर्भगृह परिकर (समतुल्य)', en:'Main Garbhagriha Perikar', amt:2500000, unit:'4 pcs' },
+  { id:'b2',  cat:'Garbhagriha',    hi:'अभ्यमुख्य गर्भगृह परिकर',      en:'Abhyamukhy Garbhagriha',   amt:1000000, unit:'6 pcs' },
+  { id:'b3',  cat:'Garbhagriha',    hi:'सहस्रकूट देवी मुख्य रत्नभ',    en:'Sahastrakut Devi Ratnabh', amt:2500000, unit:'1 unit' },
+  { id:'c1',  cat:'Dhyan Kendra',   hi:'उपमुख्य मंध्य सामरण',         en:'Upmukhy Madhy Samaran',    amt:1000000, unit:'7 units' },
+  { id:'c2',  cat:'Dhyan Kendra',   hi:'ध्यान केन्द्र प्रवेश द्वार आर्च', en:'Dhyan Kendra Entrance Arch', amt:1000000, unit:'1 unit' },
+  { id:'c3',  cat:'Dhyan Kendra',   hi:'ध्यान केन्द्र निर्माण द्वार आर्च', en:'Dhyan Kendra Nirmaan Arch', amt:1000000, unit:'1 unit' },
+  { id:'c4',  cat:'Dhyan Kendra',   hi:'ध्यान केन्द्र परिकर',            en:'Dhyan Kendra Perikar',     amt:210000, unit:'2 units' },
+  { id:'c5',  cat:'Dhyan Kendra',   hi:'मुख्य मूलनायक सहस्रकूट',        en:'Main Mulanayak Sahastrakut', amt:1000000, unit:'1 unit' },
+  { id:'c6',  cat:'Dhyan Kendra',   hi:'मूलनायक सहस्रकूट',               en:'Mulanayak Sahastrakut',    amt:1000000, unit:'1 unit' },
+  { id:'d1',  cat:'Sahastrakut',    hi:'सहस्रकूट सामरण',                en:'Sahastrakut Samaran',      amt:510000, unit:'51 pcs' },
+  { id:'d2',  cat:'Sahastrakut',    hi:'सहस्रकूट सीढ़ी मुख्य दोमा',     en:'Sahastrakut Staircase',    amt:1000000, unit:'1 unit' },
+  { id:'d3',  cat:'Sahastrakut',    hi:'सहस्रकूट प्रत्येक दिशा फेस',    en:'Sahastrakut Each Side',    amt:1000000, unit:'1 unit' },
+  { id:'d4',  cat:'Sahastrakut',    hi:'सहस्रकूट मुख्य द्वार',           en:'Sahastrakut Main Gate',    amt:1000000, unit:'4 units' },
+  { id:'d5',  cat:'Sahastrakut',    hi:'सहस्रकूट-सीढ़ी',                 en:'Sahastrakut Steps',        amt:210000, unit:'21 Sheefal' },
+  { id:'e1',  cat:'Arches & Doors', hi:'आर्च',                          en:'Arch',                     amt:110000, unit:'40 pcs' },
+  { id:'e2',  cat:'Arches & Doors', hi:'मुख्य गर्भगृह द्वार फ्रेम',     en:'Main Garbhagriha Door Frame', amt:310000, unit:'4 pcs' },
+  { id:'e3',  cat:'Arches & Doors', hi:'मुख्य जिनालय द्वार फ्रेम',      en:'Main Jinalay Door Frame',  amt:310000, unit:'4 pcs' },
+  { id:'e4',  cat:'Arches & Doors', hi:'मुख्य जिनालय जॉन आर्च फ्रेम',  en:'Main Jinalay Zone Arch',   amt:150000, unit:'8 pcs' },
+  { id:'e5',  cat:'Arches & Doors', hi:'ऑर्नामेंटल आर्च',               en:'Ornamental Arch',          amt:110000, unit:'14 pcs' },
+  { id:'e6',  cat:'Arches & Doors', hi:'सा. मर्ग मुख द्वार सार',        en:'Sa. Marg Mukh Dwar Sar',   amt:330000, unit:'6 pcs' },
+  { id:'f1',  cat:'Ceilings & Jali',hi:'सीढ़ी की जाली',                  en:'Staircase Jali',           amt:110000, unit:'6 pcs' },
+  { id:'f2',  cat:'Ceilings & Jali',hi:'सीढ़ी का द्वार',                  en:'Staircase Door',           amt:110000, unit:'6 pcs' },
+  { id:'f3',  cat:'Ceilings & Jali',hi:'ध्यान केन्द्र द्वार फ्रेम',     en:'Dhyan Kendra Door Frame',  amt:110000, unit:'2 pcs' },
+  { id:'f4',  cat:'Ceilings & Jali',hi:'सा. मर्ग मुख गृह छत',          en:'Sa. Marg Mukh Grah Chhat', amt:110000, unit:'6 pcs' },
+  { id:'f5',  cat:'Ceilings & Jali',hi:'सा. मर्ग मुख की जाली',          en:'Sa. Marg Mukh Jali',       amt:50000,  unit:'12 pcs' },
+  { id:'f6',  cat:'Ceilings & Jali',hi:'रंग मंडप छत',                   en:'Rang Mandap Chhat',        amt:20000,  unit:'34 pcs' },
+  { id:'f7',  cat:'Ceilings & Jali',hi:'परिक्रमा पिलर',                 en:'Parikrama Pillar',         amt:510000, unit:'116 pcs' },
+  { id:'f8',  cat:'Ceilings & Jali',hi:'परिक्रमा तोरण',                 en:'Parikrama Torana',         amt:510000, unit:'58 pcs' },
+  { id:'g1',  cat:'Walls & Finishes',hi:'मंदिर बीमा',                   en:'Temple Wall/Beam',         amt:20000,  unit:'376 pcs' },
+  { id:'g2',  cat:'Walls & Finishes',hi:'कोनीजी छत',                    en:'Koniji Roof',              amt:510000, unit:'10 pcs' },
+  { id:'g3',  cat:'Walls & Finishes',hi:'बीजीजी देवी',                  en:'Bijiji Devi',              amt:110000, unit:'24 pcs' },
+  { id:'g4',  cat:'Walls & Finishes',hi:'मुख्य जिनालय सीढ़ी',           en:'Main Jinalay Staircase',   amt:210000, unit:'3 steps' },
+  { id:'g5',  cat:'Walls & Finishes',hi:'पिलर आधार',                    en:'Pillar Base',              amt:210000, unit:'92 pcs' },
+  { id:'g6',  cat:'Walls & Finishes',hi:'परिक्रमा जीरिंग',              en:'Parikrama Ziring',        amt:10000,  unit:'116 pcs' },
+  { id:'g7',  cat:'Walls & Finishes',hi:'सिंटर',                        en:'Sinter/Décor',             amt:510000, unit:'24 pcs' },
+  { id:'g8',  cat:'Walls & Finishes',hi:'पिल आधार',                     en:'Peel Aadhaar',             amt:510000, unit:'52 pcs' },
+  { id:'h1',  cat:'Special Plans',  hi:'निर्माण सदस्य',                  en:'Construction Member',      amt:500000, unit:'Annual' },
+  { id:'h2',  cat:'Special Plans',  hi:'सहस्रकूट में प्रतिमा, वेदी, छत', en:'Sahastrakut Idol/Vedika', amt:555000, unit:'per unit' },
+  { id:'h3',  cat:'Special Plans',  hi:'सहस्रकूट जिनालय में देवी, छत',  en:'Sahastrakut Jinalay Devi', amt:181000, unit:'per unit' },
+  { id:'h4',  cat:'Special Plans',  hi:'सहस्रकूट जिनालय निर्माण सारथी', en:'Construction Saarthi',     amt:111000, unit:'per unit' },
+  { id:'h5',  cat:'Special Plans',  hi:'निर्माण दान – एक वर्ष कुल',     en:'1-Year Construction Donation', amt:36500, unit:'per year' },
+  { id:'h6',  cat:'Special Plans',  hi:'विद्या निलयम धर्मशाला – कक्ष',  en:'Dharamshala Room',         amt:55000,  unit:'per room' },
+];
+
+const CATEGORIES = ['All', ...new Set(ARTIFACTS.map(a => a.cat))];
+const cart = {};
+let currentCat = 'All';
+
+function renderCatTabs() {
+  document.getElementById('catTabs').innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-tab ${c===currentCat?'active':''}" onclick="filterCat('${c}')">${c}</button>`
+  ).join('');
+}
+
+function filterCat(cat) {
+  currentCat = cat;
+  renderCatTabs();
+  renderGrid();
+}
+
+function renderGrid() {
+  const items = currentCat === 'All' ? ARTIFACTS : ARTIFACTS.filter(a => a.cat === currentCat);
+  document.getElementById('artGrid').innerHTML = items.map(a => {
+    const qty = cart[a.id] || 0;
+    const sel = qty > 0;
+    return `<div class="art-card ${sel?'selected':''}" id="card_${a.id}" onclick="toggleCard('${a.id}')">
+      <div class="art-name-hi">${a.hi}</div>
+      <div class="art-name-en">${a.en}</div>
+      <div class="art-amount">₹${a.amt.toLocaleString('en-IN')}</div>
+      <div class="art-qty">${a.unit}</div>
+      ${sel ? `<div class="qty-row" onclick="event.stopPropagation()">
+        <button class="qty-btn" onclick="changeQty('${a.id}',-1)">−</button>
+        <span class="qty-val">${qty}</span>
+        <button class="qty-btn" onclick="changeQty('${a.id}',1)">+</button>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function toggleCard(id) {
+  if (cart[id]) { delete cart[id]; } else { cart[id] = 1; }
+  renderGrid(); updateSummary();
+}
+
+function changeQty(id, delta) {
+  cart[id] = Math.max(0, (cart[id]||0) + delta);
+  if (cart[id] === 0) delete cart[id];
+  renderGrid(); updateSummary();
+}
+
+function addCustom() {
+  const amt = parseInt(document.getElementById('customAmt').value);
+  const note = document.getElementById('customNote').value.trim() || 'Custom donation';
+  if (!amt || amt < 1) { alert('Please enter a valid amount'); return; }
+  const id = 'custom_' + Date.now();
+  ARTIFACTS.push({ id, cat:'Custom', hi:note, en:note, amt, unit:'custom' });
+  cart[id] = 1;
+  document.getElementById('customAmt').value = '';
+  document.getElementById('customNote').value = '';
+  renderGrid(); updateSummary();
+}
+
+function updateSummary() {
+  const ids = Object.keys(cart);
+  const total = ids.reduce((sum, id) => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    return sum + (art ? art.amt * cart[id] : 0);
+  }, 0);
+  document.getElementById('selCount').textContent = `${ids.length} item(s) selected`;
+  document.getElementById('selTotal').textContent = '₹' + total.toLocaleString('en-IN');
+  document.getElementById('nextBtn1').disabled = ids.length === 0;
+}
+
+function goStep(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById('page'+i).classList.toggle('active', i===n);
+    const btn = document.getElementById('s'+i+'btn');
+    btn.classList.toggle('active', i===n);
+    btn.classList.toggle('done', i<n);
+    if (i<n) document.getElementById('sn'+i).textContent = '✓';
+    else document.getElementById('sn'+i).textContent = i;
+  });
+  if (n===3) buildOrderSummary();
+  if (n===4) buildThankCard();
+  window.scrollTo(0,0);
+}
+
+function validateForm() {
+  const name = document.getElementById('fName').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  if (!name) { alert('Please enter your name'); return; }
+  if (!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit mobile number'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email'); return; }
+  goStep(3);
+}
+
+function buildOrderSummary() {
+  const ids = Object.keys(cart);
+  const total = ids.reduce((sum, id) => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    return sum + (art ? art.amt * cart[id] : 0);
+  }, 0);
+  document.getElementById('payAmt').textContent = '₹' + total.toLocaleString('en-IN');
+  let rows = ids.map(id => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    if (!art) return '';
+    return `<div class="order-item">
+      <span class="order-item-name">${art.hi} <small style="color:var(--text-muted)">×${cart[id]}</small></span>
+      <span class="order-item-amt">₹${(art.amt*cart[id]).toLocaleString('en-IN')}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('orderSummaryCard').innerHTML = `
+    <div class="order-card-head">Order Summary</div>${rows}
+    <div class="order-total"><span>Total</span><span>₹${total.toLocaleString('en-IN')}</span></div>`;
+}
+
+function confirmDonation() { goStep(4); sendToGoogleForm(); }
+
+function buildThankCard() {
+  const ids = Object.keys(cart);
+  const total = ids.reduce((sum, id) => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    return sum + (art ? art.amt * cart[id] : 0);
+  }, 0);
+  const name = document.getElementById('fName').value;
+  const email = document.getElementById('fEmail').value;
+  const phone = document.getElementById('fPhone').value;
+  document.getElementById('thankAmt').textContent = '₹' + total.toLocaleString('en-IN');
+  let rows = ids.map(id => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    if (!art) return '';
+    return `<div class="order-item">
+      <span class="order-item-name">${art.hi} ×${cart[id]}</span>
+      <span class="order-item-amt">₹${(art.amt*cart[id]).toLocaleString('en-IN')}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('thankCard').innerHTML = `
+    <div class="order-card-head">Donation Receipt</div>
+    <div class="order-item"><span>Donor</span><span>${name}</span></div>
+    <div class="order-item"><span>Mobile</span><span>${phone}</span></div>
+    <div class="order-item"><span>Email</span><span>${email}</span></div>
+    ${rows}
+    <div class="order-total"><span>Total Donated</span><span>₹${total.toLocaleString('en-IN')}</span></div>`;
+}
+
+function sendToGoogleForm() {
+  const ids = Object.keys(cart);
+  const total = ids.reduce((sum, id) => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    return sum + (art ? art.amt * cart[id] : 0);
+  }, 0);
+  const itemList = ids.map(id => {
+    const art = ARTIFACTS.find(a => a.id === id);
+    return art ? `${art.en} (x${cart[id]}) = Rs.${(art.amt*cart[id]).toLocaleString('en-IN')}` : '';
+  }).filter(Boolean).join(' | ');
+
+  const name  = document.getElementById('fName').value;
+  const phone = document.getElementById('fPhone').value;
+  const email = document.getElementById('fEmail').value;
+  const addr  = document.getElementById('fAddr').value;
+  const msg   = document.getElementById('fMsg').value;
+  const totalStr = 'Rs.' + total.toLocaleString('en-IN');
+
+  if (GOOGLE_FORM_ID === 'YOUR_FORM_ID') {
+    const subject = encodeURIComponent(`Vidyoday Teerth Donation - ${name} - Rs.${total.toLocaleString('en-IN')}`);
+    const body = encodeURIComponent(`New Donation\n\nName: ${name}\nMobile: ${phone}\nEmail: ${email}\nAddress: ${addr}\n\nItems: ${itemList}\n\nTotal: ${totalStr}\n\nMessage: ${msg || '(none)'}`);
+    window.open(`mailto:${ADMIN_EMAIL}?subject=${subject}&body=${body}`, '_blank');
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append(GFORM_NAME, name);
+  fd.append(GFORM_PHONE, phone);
+  fd.append(GFORM_EMAIL, email);
+  fd.append(GFORM_ADDRESS, addr || '');
+  fd.append(GFORM_ITEMS, itemList);
+  fd.append(GFORM_TOTAL, totalStr);
+  fd.append(GFORM_MESSAGE, msg || '');
+  fetch(`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`, { method:'POST', mode:'no-cors', body:fd }).catch(()=>{});
+}
+
+function resetAll() {
+  Object.keys(cart).forEach(k => delete cart[k]);
+  const keep = ARTIFACTS.filter(a => !a.id.startsWith('custom_'));
+  ARTIFACTS.length = 0; keep.forEach(a => ARTIFACTS.push(a));
+  ['fName','fPhone','fEmail','fAddr','fGotra','fMsg'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  currentCat = 'All';
+  document.getElementById('landingPage').style.display = '';
+  document.getElementById('donationSection').style.display = 'none';
+  renderCatTabs(); renderGrid(); updateSummary();
+}
+
+function startDonation() {
+  document.getElementById('landingPage').style.display = 'none';
+  document.getElementById('donationSection').style.display = '';
+  window.scrollTo(0, 0);
+}
+
+renderCatTabs();
+renderGrid();
+updateSummary();
+</script>
 </body>
 </html>
