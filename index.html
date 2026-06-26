@@ -763,8 +763,8 @@
       <input type="tel" id="fPhone" placeholder="10-digit mobile" maxlength="10" required>
     </div>
     <div class="form-group full">
-      <label>ईमेल / Email *</label>
-      <input type="email" id="fEmail" placeholder="your@email.com" required>
+      <label>ईमेल / Email (optional)</label>
+      <input type="email" id="fEmail" placeholder="your@email.com">
     </div>
     <div class="form-group full">
       <label>पता / Address</label>
@@ -997,7 +997,7 @@ function validateForm() {
   const email = document.getElementById('fEmail').value.trim();
   if (!name) { alert('Please enter your name'); return; }
   if (!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit mobile number'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email'); return; }
+  if (email && !/^[^s@]+@[^s@]+.[^s@]+$/.test(email)) { alert('Please enter a valid email'); return; }
   goStep(3);
 }
 
