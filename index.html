@@ -444,7 +444,11 @@
 
   /* Print / thank you card */
   @media print {
-    .steps, .summary-bar, .btn, .hero { display: none !important; }
+    .steps, .summary-bar, .btn, .hero, #landingPage { display: none !important; }
+    #page1, #page2, #page3 { display: none !important; }
+    #page4 { display: block !important; }
+    #receiptBox { border: 2px solid #C8941A !important; box-shadow: none !important; }
+    body { background: white !important; }
   }
 
   /* ── Landing page extras ── */
@@ -830,28 +834,85 @@
 <!-- STEP 4 -->
 <div class="page" id="page4">
 <div class="container">
-  <div style="padding-top:2.5rem; text-align:center;">
-    <div class="success-icon">🙏</div>
-    <p class="success-title">धन्यवाद! आपका दान स्वीकार हो</p>
-    <p class="success-note">
-      आपकी दान राशि <strong id="thankAmt"></strong> विद्योदय तीर्थ के निर्माण में सहयोग करेगी।<br>
-      एक पुष्टि ईमेल मंदिर प्रशासन को भेजा जा रहा है।<br><br>
-      <em>Your donation helps build a timeless shrine for generations to come. 🕉</em>
-    </p>
-    <div class="order-card" id="thankCard" style="max-width:480px; margin: 0 auto 1.5rem; text-align:left;"></div>
-    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;">
-      <button class="btn btn-outline" onclick="window.print()">🖨 Print Receipt</button>
-      <button class="btn btn-primary" onclick="resetAll()">Make Another Donation</button>
+  <div style="padding-top:2rem; padding-bottom:3rem;">
+
+    <!-- Success banner -->
+    <div style="text-align:center; margin-bottom:1.5rem;">
+      <div class="success-icon">🙏</div>
+      <p class="success-title">धन्यवाद! आपका दान स्वीकार हो</p>
+      <p style="font-size:.88rem; color:var(--text-muted); margin-top:.3rem;">
+        Your donation has been recorded · <em>जय जिनेन्द्र</em>
+      </p>
     </div>
-    <div style="max-width:480px; margin:0 auto; padding:1.2rem; background:var(--white); border:1px solid var(--border); border-radius:12px; text-align:left;">
-      <p style="font-weight:600; color:var(--maroon); font-size:.88rem; margin-bottom:.6rem;">Bank Transfer Details</p>
-      <table style="width:100%; font-size:.82rem; color:var(--text-muted); border-collapse:collapse;">
-        <tr><td style="padding:.25rem 0; color:var(--text);">Account Name</td><td style="text-align:right;">Shri ADJTCSKJNSU OSDJPC</td></tr>
-        <tr><td style="padding:.25rem 0; color:var(--text);">A/c No.</td><td style="text-align:right;">310111098106</td></tr>
-        <tr><td style="padding:.25rem 0; color:var(--text);">IFSC</td><td style="text-align:right;">HDFC0003917</td></tr>
-        <tr><td style="padding:.25rem 0; color:var(--text);">Contact</td><td style="text-align:right;">72240 81457</td></tr>
-      </table>
+
+    <!-- RECEIPT BOX -->
+    <div id="receiptBox" style="max-width:520px; margin:0 auto 1.5rem; background:var(--white); border:2px solid var(--gold); border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(123,28,28,.10);">
+
+      <!-- Receipt header -->
+      <div style="background:linear-gradient(135deg,var(--maroon),#4A0E0E); color:var(--white); padding:1.2rem 1.4rem; text-align:center;">
+        <div style="font-size:1.3rem; margin-bottom:.2rem;">🕉</div>
+        <p style="font-family:'Tiro Devanagari Hindi',serif; font-size:1.1rem; color:var(--gold-light);">विद्योदय तीर्थ</p>
+        <p style="font-size:.72rem; color:rgba(255,255,255,.7); margin-top:.15rem;">श्री आदिनाथ दिगम्बर जैन · एम.पी. नगर, भोपाल</p>
+        <div style="margin-top:.7rem; background:rgba(200,148,26,.25); border:1px solid rgba(200,148,26,.4); border-radius:8px; padding:.4rem .8rem; display:inline-block;">
+          <span style="font-size:.7rem; letter-spacing:.08em; color:var(--gold-light);">DONATION RECEIPT</span>
+        </div>
+      </div>
+
+      <!-- Receipt number & date -->
+      <div style="display:flex; justify-content:space-between; padding:.7rem 1.2rem; background:var(--cream-dark); font-size:.78rem; color:var(--text-muted); border-bottom:1px solid var(--border);">
+        <span>Receipt No: <strong id="receiptNo" style="color:var(--maroon)"></strong></span>
+        <span>Date: <strong id="receiptDate" style="color:var(--maroon)"></strong></span>
+      </div>
+
+      <!-- Donor details -->
+      <div style="padding:.9rem 1.2rem; border-bottom:1px solid var(--border);">
+        <p style="font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin-bottom:.6rem;">Donor Details · दानदाता की जानकारी</p>
+        <table style="width:100%; border-collapse:collapse; font-size:.85rem;">
+          <tr><td style="padding:.22rem 0; color:var(--text-muted); width:110px;">Name / नाम</td><td style="font-weight:600; color:var(--text)" id="rName"></td></tr>
+          <tr><td style="padding:.22rem 0; color:var(--text-muted);">Mobile / मोबाइल</td><td style="color:var(--text)" id="rPhone"></td></tr>
+          <tr id="rEmailRow"><td style="padding:.22rem 0; color:var(--text-muted);">Email</td><td style="color:var(--text)" id="rEmail"></td></tr>
+          <tr id="rAddrRow"><td style="padding:.22rem 0; color:var(--text-muted);">Address</td><td style="color:var(--text)" id="rAddr"></td></tr>
+          <tr id="rGotraRow"><td style="padding:.22rem 0; color:var(--text-muted);">Gotra / गोत्र</td><td style="color:var(--text)" id="rGotra"></td></tr>
+        </table>
+      </div>
+
+      <!-- Donated items -->
+      <div style="padding:.9rem 1.2rem; border-bottom:1px solid var(--border);">
+        <p style="font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); margin-bottom:.6rem;">Items Donated · दान की वस्तुएं</p>
+        <div id="rItems"></div>
+      </div>
+
+      <!-- Total -->
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 1.2rem; background:var(--maroon-light); border-bottom:1px solid var(--border);">
+        <span style="font-weight:700; color:var(--maroon); font-size:.95rem;">कुल दान राशि / Total Donated</span>
+        <span style="font-size:1.4rem; font-weight:700; color:var(--maroon)" id="rTotal"></span>
+      </div>
+
+      <!-- Payment method -->
+      <div style="padding:.7rem 1.2rem; border-bottom:1px solid var(--border); font-size:.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+        <span>Payment via</span>
+        <span style="color:var(--maroon); font-weight:600;">UPI · shriadjtcskjnsuosdjp.65006900@hdfcbank</span>
+      </div>
+
+      <!-- Message if any -->
+      <div id="rMsgRow" style="padding:.7rem 1.2rem; border-bottom:1px solid var(--border); font-size:.82rem; display:none;">
+        <span style="color:var(--text-muted);">Message: </span><span id="rMsg" style="color:var(--text); font-style:italic;"></span>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding:.9rem 1.2rem; text-align:center; font-size:.72rem; color:var(--text-muted); line-height:1.8;">
+        This receipt confirms your donation to <strong style="color:var(--maroon)">Vidyoday Teerth Construction Fund</strong>.<br>
+        Helpline: 72240 81457 · teerthvidodya@gmail.com
+      </div>
     </div>
+
+    <!-- Action buttons -->
+    <div style="display:flex; gap:.8rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+      <button class="btn btn-outline" onclick="printReceipt()" style="gap:.4rem;">🖨 Print Receipt</button>
+      <button class="btn btn-outline" onclick="downloadReceipt()" style="gap:.4rem;">⬇ Save as PDF</button>
+      <button class="btn btn-primary" onclick="resetAll()">+ New Donation</button>
+    </div>
+
   </div>
 </div>
 </div>
@@ -1051,25 +1112,58 @@ function buildThankCard() {
     const art = ARTIFACTS.find(a => a.id === id);
     return sum + (art ? art.amt * cart[id] : 0);
   }, 0);
-  const name = document.getElementById('fName').value;
-  const email = document.getElementById('fEmail').value;
+  const name  = document.getElementById('fName').value;
   const phone = document.getElementById('fPhone').value;
-  document.getElementById('thankAmt').textContent = '₹' + total.toLocaleString('en-IN');
-  let rows = ids.map(id => {
+  const email = document.getElementById('fEmail').value;
+  const addr  = document.getElementById('fAddr').value;
+  const gotra = document.getElementById('fGotra').value;
+  const msg   = document.getElementById('fMsg').value;
+
+  // Receipt number & date
+  const now = new Date();
+  const receiptNo = 'VT' + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+  const dateStr = now.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+
+  document.getElementById('receiptNo').textContent = receiptNo;
+  document.getElementById('receiptDate').textContent = dateStr;
+  document.getElementById('rName').textContent  = name;
+  document.getElementById('rPhone').textContent = phone;
+
+  const emailRow = document.getElementById('rEmailRow');
+  if (email) { document.getElementById('rEmail').textContent = email; emailRow.style.display=''; }
+  else emailRow.style.display = 'none';
+
+  const addrRow = document.getElementById('rAddrRow');
+  if (addr) { document.getElementById('rAddr').textContent = addr; addrRow.style.display=''; }
+  else addrRow.style.display = 'none';
+
+  const gotraRow = document.getElementById('rGotraRow');
+  if (gotra) { document.getElementById('rGotra').textContent = gotra; gotraRow.style.display=''; }
+  else gotraRow.style.display = 'none';
+
+  const msgRow = document.getElementById('rMsgRow');
+  if (msg) { document.getElementById('rMsg').textContent = msg; msgRow.style.display=''; }
+  else msgRow.style.display = 'none';
+
+  // Items
+  document.getElementById('rItems').innerHTML = ids.map(id => {
     const art = ARTIFACTS.find(a => a.id === id);
     if (!art) return '';
-    return `<div class="order-item">
-      <span class="order-item-name">${art.hi} ×${cart[id]}</span>
-      <span class="order-item-amt">₹${(art.amt*cart[id]).toLocaleString('en-IN')}</span>
+    return `<div style="display:flex; justify-content:space-between; padding:.3rem 0; border-bottom:1px dotted var(--border); font-size:.83rem;">
+      <span style="color:var(--text)">${art.hi} <span style="color:var(--text-muted); font-size:.75rem;">(${art.en}) ×${cart[id]}</span></span>
+      <span style="font-weight:600; color:var(--gold-dark);">₹${(art.amt*cart[id]).toLocaleString('en-IN')}</span>
     </div>`;
   }).join('');
-  document.getElementById('thankCard').innerHTML = `
-    <div class="order-card-head">Donation Receipt</div>
-    <div class="order-item"><span>Donor</span><span>${name}</span></div>
-    <div class="order-item"><span>Mobile</span><span>${phone}</span></div>
-    <div class="order-item"><span>Email</span><span>${email}</span></div>
-    ${rows}
-    <div class="order-total"><span>Total Donated</span><span>₹${total.toLocaleString('en-IN')}</span></div>`;
+
+  document.getElementById('rTotal').textContent = '₹' + total.toLocaleString('en-IN');
+}
+
+function printReceipt() {
+  window.print();
+}
+
+function downloadReceipt() {
+  window.print(); // browsers show "Save as PDF" option in print dialog
 }
 
 function sendToGoogleForm() {
